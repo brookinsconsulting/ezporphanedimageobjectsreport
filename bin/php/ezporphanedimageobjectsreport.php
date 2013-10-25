@@ -6,7 +6,7 @@
  * @copyright Copyright (C) 1999 - 2014 Brookins Consulting. All rights reserved.
  * @copyright Copyright (C) 2013 - 2014 Think Creative. All rights reserved.
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2 (or later)
- * @version 0.10.9
+ * @version 0.12.0
  * @package ezporphanedimageobjectsreport
  */
 
@@ -17,7 +17,7 @@ require 'autoload.php';
 $cli = eZCLI::instance();
 $script = eZScript::instance( array( 'description' => ( "eZ Publish Orphaned Image Nodes CSV Report Script\n" .
                                                         "\n" .
-                                                        "ezporphanedimageobjectsreport.php --storage-dir=export --hostname=www.example.com --nodeid=43" ),
+                                                        "ezporphanedimageobjectsreport.php --storage-dir=var/orphanedImageObjectsReport --hostname=www.example.com --nodeid=43" ),
                                      'use-session' => false,
                                      'use-modules' => true,
                                      'use-extensions' => true,
@@ -239,7 +239,10 @@ while ( list( $key, $childNode ) = each( $subTree ) )
                            $imageFile = array_pop( $imagePathParts );
                            $attributeStringContent = @explode( '|', $imageFile);
                            $objectData[] = $attributeStringContent[0];
-                           $objectData[] = $attributeStringContent[1];
+                           if( isset( $attributeStringContent[1] ) )
+                           {
+                               $objectData[] = $attributeStringContent[1];
+                           }
                        } break;
 
                        case 'ezbinaryfile':

@@ -69,7 +69,7 @@ o  PHP version:
    Make sure you have PHP 5.x or higher.
 
 
-Usage
+Usage - Command line script
 ============
 
 # Change directory into eZ Publish website document root:
@@ -78,12 +78,32 @@ cd path/to/ezpublish/docroot;
 # Create directory for report to be stored after generation
 mkdir var/orphanedCsvReport;
 
+# Warning: script may consume larger than expected amounts of memory durring execution
+
 # Run the script to generate the report
-php ../FSU-CMS/extension/fsu/bin/php/ezporphanedimageobjectsreport.php
---storage-dir=var/orphanedCsvReport --hostname=www.example.com --nodeid=43
+php -d memory_limit=-1  ./extension/fsu/bin/php/ezporphanedimageobjectsreport.php
+--storage-dir=var/orphanedImageObjectsReport --hostname=www.example.com --nodeid=43
 
 # Review generated report in open office as a spreadsheet:
 less var/orphanedCsvReport/orphanedCsvReport.csv
+
+
+Usage - Cronjob
+============
+
+# Change directory into eZ Publish website document root:
+cd path/to/ezpublish/docroot;
+
+# Run the cronjob manually to check links
+php ./runcronjobs.php ezporphanedimageobjectsreportgenerate
+
+
+Usage - Module
+============
+
+# Click the new "Image Report" menu tab and follow the instructions on the page.
+
+http://admin.example.com/orphanedimageobjects/report
 
 
 Troubleshooting
